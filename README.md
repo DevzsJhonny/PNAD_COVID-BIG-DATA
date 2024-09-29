@@ -20,7 +20,7 @@ Dados em Nuvem (BigQuery) e trazendo as seguintes características:<br><br>
 ● Utilizar 3 meses para construção da solução (foi utilizado Agosto a Outubro;<br>
 ● Caracterização dos sintomas clínicos da população;<br>
 ● Comportamento da população na época da COVID-19;<br>
-● Características econômicas da Sociedade;<br><br>
+● Características econômicas da Sociedade.<br><br>
 
 <h1>Documentos Importantes:</h1><br><br>
 arquivo .pdf trata-se da entrega do documento final ao hospital, com resumos, indicadores e gráficos para visualização dos dados;<br><br>
