@@ -2,7 +2,8 @@
 <h2>Pesquisa feita pelo IBGE e pelo PNAD</h2><br>
 Projeto final da fase 3 em Data Analytics do módulo de Big Data<br><br>
 
-<h3>link da base de dados:[pnad-covid ibge](https://www.ibge.gov.br/estatisticas/investigacoes-experimentais/estatisticas-experimentais/27946-divulgacao-semanal-pnadcovid1?t=downloads&utm_source=covid19&utm_medium=hotsite&utm_campaign=covid_19) </h3>
+<h3>link da base de dados:</h3> <br>
+https://www.ibge.gov.br/estatisticas/investigacoes-experimentais/estatisticas-experimentais/27946-divulgacao-semanal-pnadcovid1?t=downloads&utm_source=covid19&utm_medium=hotsite&utm_campaign=covid_19 
 <br><br>
 Integrante do time de dados:<br><br>
 ● Gabriel Silva Ferreira<br>
