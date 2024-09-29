@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/b07ce239-a59f-45ae-8f74-21d2df2c0716)# Análise dos dados da COVID-19
+# Análise dos dados da COVID-19
 <h2>Pesquisa feita pelo IBGE e pelo PNAD</h2><br>
 Projeto final da fase 3 em Data Analytics do módulo de Big Data<br><br>
 
@@ -25,5 +25,5 @@ Dados em Nuvem (BigQuery) e trazendo as seguintes características:<br><br>
 <h1>Documentos Importantes:</h1><br><br>
 arquivo .pdf trata-se da entrega do documento final ao hospital, com resumos, indicadores e gráficos para visualização dos dados;<br><br>
 arquivo .pbix são os gráficos e dashboards utilizado para analise dos dados<br><br>
-pasta query_bigquery é a script utilizado para consultar as perguntas do questionario, e com isso importamos os resultados para fazer os dashs.</b>
+pasta query_bigquery é a script utilizado para consultar as perguntas do questionario, e com isso importamos os resultados para fazer os dashs.<br><br>
 questionario 8, 9 e 10 se refere às questões da pesquisa que o IBGE fez aos respondentes.
