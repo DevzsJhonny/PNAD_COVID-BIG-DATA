@@ -22,6 +22,6 @@ Dados em Nuvem (BigQuery) e trazendo as seguintes características:<br><br>
 ● Características econômicas da Sociedade;<br><br>
 
 <h1>Documentos Importantes:</h1><br><br>
-<b>arquivo .pdf trata-se da entrega do documento final ao hospital, com resumos, indicadores e gráficos para visualização dos dados;</b><br>
-<b>arquivo .pbix são os gráficos e dashboards utilizado para analise dos dados</b><br>
-<b>pasta query_bigquery é a script utilizado para consultar as perguntas do questionario, e com isso importamos os resultados para fazer os dashs.</b>
+arquivo .pdf trata-se da entrega do documento final ao hospital, com resumos, indicadores e gráficos para visualização dos dados;<br>
+arquivo .pbix são os gráficos e dashboards utilizado para analise dos dados<br>
+pasta query_bigquery é a script utilizado para consultar as perguntas do questionario, e com isso importamos os resultados para fazer os dashs.</b>
