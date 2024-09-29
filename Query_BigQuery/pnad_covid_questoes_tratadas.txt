@@ -1,0 +1,292 @@
+
+select regiao, idade, sexo, cor_raca, escolaridade,
+semana_passada_tipo_sintoma,
+
+fez_exame_cotonete,
+resultado_exame_cotonete,
+realizou_teste,
+ficou_em_casa,
+tomou_remedio,
+foi_internado,
+foi_entubado,
+buscou_estabelecimento_saude,
+medida_restricao_contato_com_pessoas,
+
+pessoa_empregada,
+pessoa_desempregada,
+semana_passada_trabalhou,
+semana_passada_estava_afastado_dotrabalho,
+quanto_tempo_afastado,
+principal_atividade_trabalhada,
+nr_faixa_rendimento_dinheiro,
+
+count(*) qtde_pessoa
+
+from (
+
+  --- 20 perguntas e questionamentos
+  SELECT 
+  CASE
+    WHEN sigla_uf IN ('DF', 'GO', 'MT', 'MS') THEN 'Centro-Oeste'
+    WHEN sigla_uf IN ('AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE') THEN 'Nordeste'
+    WHEN sigla_uf IN ('AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO') THEN 'Norte'
+    WHEN sigla_uf IN ('ES', 'MG', 'RJ', 'SP') THEN 'Sudeste'
+    WHEN sigla_uf IN ('PR', 'RS', 'SC') THEN 'Sul'
+    ELSE NULL
+  END AS regiao,
+  case
+    when cast(a002 as int64) < 20 then '0 a 19 anos'
+    when cast(a002 as int64) < 60 then '20 a 59 anos'
+    when cast(a002 as int64) >= 60 then '60+ anos'
+    else 'Nao informado'
+  end idade,
+  CASE 
+    WHEN cast(a003 as int64) = 1 THEN 'Homem'
+    WHEN cast(a003 as int64) = 2 THEN 'Mulher'
+  END sexo,
+  CASE 
+    WHEN cast(a004 as int64) = 1 THEN 'Branca'
+    WHEN cast(a004 as int64) = 2 THEN 'Preta'
+    WHEN cast(a004 as int64) = 3 THEN 'Amarela'
+    WHEN cast(a004 as int64) = 4 THEN 'Parda'
+  END cor_raca,
+  CASE 
+    WHEN cast(a005 as int64) = 1 THEN 'Sem Instrucao'
+    WHEN cast(a005 as int64) = 2 THEN 'Fundamental Incompleto'
+    WHEN cast(a005 as int64) in(3,4) THEN 'Fundamental Completo/Medio Incompleto'
+    --WHEN cast(a005 as int64) = 4 THEN 'Medio Incompleto'
+    WHEN cast(a005 as int64) in(5,6) THEN 'Medio Completo/Superior Incompleto'
+    --WHEN cast(a005 as int64) = 6 THEN 'Superior Incompleto'
+    WHEN cast(a005 as int64) = 7 THEN 'Superior Completo'
+    ELSE 'Outros'
+  END escolaridade,
+  -- CARACTERÍSTICAS CLÍNICAS E SINTOMAS
+  -- > SINTOMAS LEVES
+  CASE 
+    WHEN cast(b0011 as int64) = 1 THEN 'Sim'
+    WHEN cast(b0011 as int64) = 2 THEN 'Nao'
+    WHEN cast(b0011 as int64) in (3, 9) THEN 'Nao sabe/Ignorado'
+    --WHEN cast(b0011 as int64)  = 9 THEN 'Ignorado'
+  END semana_passada_teve_febre,
+  CASE 
+    WHEN cast(b0012 as int64) = 1 THEN 'Sim'
+    WHEN cast(b0012 as int64) = 2 THEN 'Nao'
+    WHEN cast(b0012 as int64) in (3, 9) THEN 'Nao sabe/Ignorado'
+    --WHEN cast(b0012 as int64) = 9 THEN 'Ignorado'
+  END semana_passada_teve_tosse,
+  CASE 
+    WHEN cast(b0013 as int64) = 1 THEN 'Sim'
+    WHEN cast(b0013 as int64) = 2 THEN 'Nao'
+    WHEN cast(b0013 as int64) in (3, 9) THEN 'Nao sabe/Ignorado'
+    --WHEN cast(b0013 as int64) = 9 THEN 'Ignorado'
+  END semana_passada_teve_dor_de_garganta,
+  CASE 
+    WHEN cast(b0019 as int64) = 1 THEN 'Sim'
+    WHEN cast(b0019 as int64) = 2 THEN 'Nao'
+    WHEN cast(b0019 as int64) in (3, 9) THEN 'Nao sabe/Ignorado'
+    --WHEN cast(b0019 as int64) = 9 THEN 'Ignorado'
+  END semana_passada_teve_fadiga,
+  CASE 
+    WHEN cast(b00111 as int64) = 1 THEN 'Sim'
+    WHEN cast(b00111 as int64) = 2 THEN 'Nao'
+    WHEN cast(b00111 as int64) in (3, 9) THEN 'Nao sabe/Ignorado'
+    --WHEN cast(b00111 as int64) = 9 THEN 'Ignorado'
+  END semana_passada_teve_perda_cheiro_sabor,
+  -- > SINTOMA MODERADO
+  CASE 
+    WHEN cast(b0016 as int64) = 1 THEN 'Sim'
+    WHEN cast(b0016 as int64) = 2 THEN 'Nao'
+    WHEN cast(b0016 as int64) in (3, 9) THEN 'Nao sabe/Ignorado'
+    --WHEN cast(b0016 as int64) = 9 THEN 'Ignorado'
+  END semana_passada_teve_dor_no_peito,
+  CASE 
+    WHEN cast(b00112 as int64) = 1 THEN 'Sim'
+    WHEN cast(b00112 as int64) = 2 THEN 'Nao'
+    WHEN cast(b00112 as int64) in (3, 9) THEN 'Nao sabe/Ignorado'
+    --WHEN cast(b00112 as int64) = 9 THEN 'Ignorado'
+  END semana_passada_teve_dor_muscular,
+  
+  case
+    when cast(b0014 as int64) = 1 then 'Sintoma grave'
+    when cast(b0016 as int64) = 1 or cast(b00112 as int64) = 1 then
+      case
+        when ( if(b0016='1',1,0) + if(b00112='1',1,0) ) = 1 then 'Um sintoma moderado'
+        else 'Dois sintomas moderados'
+      end
+    when cast(b0011 as int64) = 1 or cast(b0012 as int64) = 1 or cast(b0013 as int64) = 1 or cast(b0019 as int64) = 1 or cast(b00111 as int64) = 1 then
+      case
+        when ( if(b0011='1',1,0) + if(b0012='1',1,0) + if(b0013='1',1,0) + if(b0019='1',1,0) + if(b00111='1',1,0) ) = 1 then 'Um sintoma leve'
+        when ( if(b0011='1',1,0) + if(b0012='1',1,0) + if(b0013='1',1,0) + if(b0019='1',1,0) + if(b00111='1',1,0) ) = 2 then 'Dois sintomas leves'
+        else 'Tres ou mais sintomas leves'
+      end
+    else 'Nenhum sintoma/Nao sabe/Ignorado'
+  end semana_passada_tipo_sintoma,
+
+  -- > SINTOMA GRAVE
+  CASE 
+    WHEN cast(b0014 as int64) = 1 THEN 'Sim'
+    WHEN cast(b0014 as int64) = 2 THEN 'Nao'
+    WHEN cast(b0014 as int64) in (3, 9) THEN 'Nao sabe/Ignorado'
+    --WHEN cast(b0014 as int64) = 9 THEN 'Ignorado'
+  END semana_passada_teve_dificuldade_respirar,
+  -- EXAME E TESTES
+  CASE 
+    WHEN cast(b009a as int64) = 1 THEN 'Sim'
+    WHEN cast(b009a as int64) = 2 THEN 'Nao'
+    --WHEN cast(b009a as int64) = 9 THEN 'Ignorado'
+    ELSE 'Ignorado/Nao Informado'
+  END fez_exame_cotonete,
+  CASE 
+    WHEN cast(b009b as int64) = 1 THEN 'Positivo'
+    WHEN cast(b009b as int64) = 2 THEN 'Negativo'
+    WHEN cast(b009b as int64) = 3 THEN 'Inconclusivo'
+    WHEN cast(b009b as int64) = 4 THEN 'Ainda nao recebeu o resultado'
+    --WHEN cast(b009b as int64) = 9 THEN 'Ignorado'
+    ELSE 'Ignorado/Nao Informado'
+  END resultado_exame_cotonete,
+  -- realizou algum teste
+    CASE WHEN CAST(b008 AS INT64)=1 THEN 'Sim, realizou algum teste' ELSE 'Não realizou nenhum teste' END AS realizou_teste,
+  -- COMPORTAMENTO
+ CASE 
+    WHEN cast(b002 as int64) = 1 THEN 'Buscou um estabelecimento de Saúde'
+    WHEN cast(b002 as int64) = 2 THEN 'Não buscou nenhum estabelecimento de Saúde'
+   -- WHEN cast(b002 as int64) = 9 THEN 'Ignorado'
+   ELSE 'Ignorado/Nao Informado'
+  END buscou_estabelecimento_saude,
+
+  CASE 
+    WHEN cast(B0031 as int64) = 1 THEN 'Ficou em casa para recuperar os sintomas'
+    WHEN cast(B0031 as int64) = 2 THEN 'Não ficou em casa'
+   -- WHEN cast(B0031 as int64) = 9 THEN 'Ignorado'
+    ELSE 'Ignorado/Nao Informado'
+  END ficou_em_casa,
+  CASE 
+    WHEN cast(B0034 as int64) = 1 THEN 'Sim, tomou algum remédio'
+    WHEN cast(B0034 as int64) = 2 THEN 'Não tomou remédio'
+    --WHEN cast(B0034 as int64) = 9 THEN 'Ignorado'
+    ELSE 'Ignorado/Nao Informado'
+  END tomou_remedio,
+   CASE 
+    WHEN cast(B005 as int64) = 1 THEN 'Sim, foi internado'
+    WHEN cast(B005 as int64) = 2 THEN 'Não foi internado'
+    WHEN cast(B005 as int64) = 3 THEN 'Não foi atendido'
+    --WHEN cast(B0034 as int64) = 9 THEN 'Ignorado'
+    ELSE 'Ignorado/Nao Informado'
+  END foi_internado,
+    CASE 
+    WHEN cast(B006 as int64) = 1 THEN 'Sim, foi entubado'
+    WHEN cast(B006 as int64) = 2 THEN 'Não foi entubado'
+    --WHEN cast(B0034 as int64) = 9 THEN 'Ignorado'
+    ELSE 'Ignorado/Nao Informado'
+  END foi_entubado,
+  CASE 
+    WHEN cast(b011 as int64) = 1 THEN 'Nao fez restricao levou vida normal como antes da pandemia'
+    WHEN cast(b011 as int64) = 2 THEN 'Reduziu o contato com as pessoas mas continuou saindo de casa para trabalho ou atividades nao essenciais e/ou recebendo visitas'
+    WHEN cast(b011 as int64) = 3 THEN 'Ficou em casa e so saiu em caso de necessidade basica'
+    WHEN cast(b011 as int64) = 4 THEN 'Ficou rigorosamente em casa'
+    --WHEN cast(b011 as int64) = 9 THEN 'Ignorado'
+    ELSE 'Ignorado/Nao Informado'
+  END medida_restricao_contato_com_pessoas,
+  -- CARACTERÍSTICAS DE TRABALHO
+  CASE 
+    -- TRABALHOU E TEM CARTEIRA ASSINADA, OU NAO TRABALHOU, ESTAVA AFASTADO MAS TEM A CARTEIRA
+    WHEN cast(c001 as int64)   = 1 AND (cast(C007B as int64) = 1 OR cast(C007B as int64) = 2) 
+    OR   (cast(c001 as int64)  = 2 AND cast(c002 as int64) = 1 AND (cast(C007B as int64) = 1 OR cast(C007B as int64) = 2))
+    THEN 'Empregada com carteira assinada'
+    -- NAO TEM A CARTEIRA MAS TRABALHOU NA SEMANA PASSADA
+    WHEN cast(C007B as int64) = 3 AND cast(c001 as int64) = 1 THEN 'Trabalha sem carteira assinada'
+    ELSE 'Nao Aplicavel'
+END pessoa_empregada,
+CASE 
+   -- Ñ TRABALHOU E Ñ ESTAVA AFASTADO E GOSTARIA DE TER TRABALHADO (PARA EXCLUIR APOSENTADOS/ESTUDANTES OU FÉRIAS)
+    WHEN cast(c001 as int64)   = 1 AND cast(c002 as int64)   = 2 AND cast(C017A as int64)   = 1 THEN 'Desempregada'
+    ELSE 'Nao Aplicavel'
+end pessoa_desempregada,
+  CASE 
+    WHEN cast(c001 as int64) = 1 THEN 'Sim'
+    WHEN cast(c001 as int64) = 2 THEN 'Nao'
+    ELSE 'Nao Aplicavel'
+  END semana_passada_trabalhou,
+  CASE 
+    WHEN cast(c002 as int64) = 1 THEN 'Sim'
+    WHEN cast(c002 as int64) = 2 THEN 'Nao'
+    ELSE 'Nao Aplicavel'
+  END semana_passada_estava_afastado_dotrabalho,
+  CASE 
+    WHEN cast(c005 as int64) = 1 THEN 'Menos de 1 mes'
+    WHEN cast(c005 as int64) = 2 THEN 'De 1 mes a menos de 1 ano'
+    WHEN cast(c005 as int64) = 3 THEN 'De 1 ano a menos de 2 anos'
+    WHEN cast(c005 as int64) = 4 THEN '2 anos ou mais'
+    ELSE 'Nao Aplicavel'
+  END quanto_tempo_afastado,
+  CASE 
+    WHEN cast(c007d as int64) = 1 THEN 'Agricultura/pecuaria/producao florestal/pesca'
+    WHEN cast(c007d as int64) = 2 THEN 'Extracao de petroleo/carvao mineral/minerais metalicos/pedra/areia/sal etc.'
+    WHEN cast(c007d as int64) = 3  THEN 'Industria da transformacao (inclusive confeccao e fabricacao caseira)'
+    WHEN cast(c007d as int64) = 4  THEN 'Fornecimento de eletricidade e gas/agua/esgoto e coleta de lixo'
+    WHEN cast(c007d as int64) = 5  THEN 'Construcao'
+    WHEN cast(c007d as int64) = 6  THEN 'Comercio no atacado e varejo '
+    WHEN cast(c007d as int64) = 7  THEN 'Reparacao de veiculos automotores e motocicletas'
+    WHEN cast(c007d as int64) = 8  THEN 'Transporte de passageiros'
+    WHEN cast(c007d as int64) = 9  THEN 'Transporte de mercadorias'
+    WHEN cast(c007d as int64) = 10 THEN 'Armazenamento/correios e servicos de entregas'
+    WHEN cast(c007d as int64) = 11 THEN 'Hospedagem (hoteis/pousadas/etc.)'
+    WHEN cast(c007d as int64) = 12 THEN 'Servico de alimentacao (bares/restaurantes/ambulantes de alimentacao)'
+    WHEN cast(c007d as int64) = 13 THEN 'Informacao e comunicacao (jornais/radio e televisao/telecomunicacoes e informatica)'
+    WHEN cast(c007d as int64) = 14 THEN 'Bancos/atividades financeiras e de seguros'
+    WHEN cast(c007d as int64) = 15 THEN 'Atividades imobiliarias'
+    WHEN cast(c007d as int64) = 16 THEN 'Escritorios de advocacia/engenharia/publicidade e veterinaria (Atividades profissionais/cientificas e tecnicas)'
+    WHEN cast(c007d as int64) = 17 THEN 'Atividades de locacao de mao de obra/segurança/limpeza/paisagismo e teleatendimento'
+    WHEN cast(c007d as int64) = 18 THEN 'Administracao publica (governo federal/estadual/municipal)'
+    WHEN cast(c007d as int64) = 19 THEN 'Educacao'
+    WHEN cast(c007d as int64) = 20 THEN 'Saude humana e assistencia social'
+    WHEN cast(c007d as int64) = 21 THEN 'Organizacoes religiosas/sindicatos e associacoes'
+    WHEN cast(c007d as int64) = 22 THEN 'Atividades artisticas/esportivas e de recreacao '
+    WHEN cast(c007d as int64) = 23 THEN 'Cabeleireiros/tratamento de beleza e servicos pessoais '
+    WHEN cast(c007d as int64) = 24 THEN 'Servico domestico remunerado (sera imputado da posicao na ocupacao)'
+    --WHEN cast(c007d as int64) = 25 THEN 'Outro'
+    ELSE 'Outro/Nao Aplicavel'
+  END principal_atividade_trabalhada,
+  CASE 
+    --WHEN cast(c01011 as int64) = 0 THEN '0     - 100'
+    --WHEN cast(c01011 as int64) = 1 THEN '101   - 300'
+    --WHEN cast(c01011 as int64) = 2 THEN '301   - 600'
+    --WHEN cast(c01011 as int64) = 3 THEN '601   - 800'
+    --WHEN cast(c01011 as int64) = 4 THEN '801   - 1600'
+    --WHEN cast(c01011 as int64) = 5 THEN '1601  - 3000'
+    --WHEN cast(c01011 as int64) = 6 THEN '3001  - 10000'
+    --WHEN cast(c01011 as int64) = 7 THEN '10001 - 50000'
+    --WHEN cast(c01011 as int64) = 8 THEN '50001 - 100000'
+    --WHEN cast(c01011 as int64) = 9 THEN 'Mais de 100.000'
+    WHEN cast(c01011 as int64) in (0,1,2) THEN 'De 0 a 600'
+    WHEN cast(c01011 as int64) in (3,4)   THEN 'De 601 a 1600'
+    WHEN cast(c01011 as int64) = 5        THEN 'De 1601 a 3000'
+    WHEN cast(c01011 as int64) = 6        THEN 'De 3001 a 10000'
+    WHEN cast(c01011 as int64) = 7        THEN 'De 10001 a 50000'
+    WHEN cast(c01011 as int64) in (8,9)   THEN 'A partir de 50001'
+    ELSE 'Nao Aplicavel'
+  END nr_faixa_rendimento_dinheiro
+  FROM basedosdados.br_ibge_pnad_covid.microdados
+  WHERE mes in (8, 9, 10)
+
+)
+group by regiao, idade, sexo, cor_raca, escolaridade,
+semana_passada_tipo_sintoma,
+fez_exame_cotonete,
+resultado_exame_cotonete,
+realizou_teste,
+ficou_em_casa,
+tomou_remedio,
+foi_internado,
+foi_entubado,
+buscou_estabelecimento_saude,
+medida_restricao_contato_com_pessoas,
+
+pessoa_empregada,
+pessoa_desempregada,
+semana_passada_trabalhou,
+semana_passada_estava_afastado_dotrabalho,
+quanto_tempo_afastado,
+principal_atividade_trabalhada,
+nr_faixa_rendimento_dinheiro
+
