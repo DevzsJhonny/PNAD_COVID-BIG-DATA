@@ -1,29 +1,85 @@
-# Análise dos dados da COVID-19
-<h2>Pesquisa feita pelo IBGE e pelo PNAD</h2><br>
-Projeto final da fase 3 em Data Analytics do módulo de Big Data<br><br>
+# 🦠 Análise dos Dados da COVID-19 no Brasil
 
-<h3>link da base de dados:</h3> <br>
-https://www.ibge.gov.br/estatisticas/investigacoes-experimentais/estatisticas-experimentais/27946-divulgacao-semanal-pnadcovid1?t=downloads&utm_source=covid19&utm_medium=hotsite&utm_campaign=covid_19 
-<br><br>
-Integrante do time de dados:<br><br>
-● Gabriel Silva Ferreira<br>
-● Gustavo Duran Domingues<br>
-● Jhonny Amorim Silva<br>
-● Lucas Alexander dos Santos<br>
-● Sandro Semmer<br>
-<br><br>
+## Projeto de Data Analytics e Big Data com PNAD-COVID (IBGE)
 
-Nosso time de Dados teve como objetivo entrar na base de dados do
-PNAD-COVID-19 do IBGE e organizar a base para análise, utilizando Banco de
-Dados em Nuvem (BigQuery) e trazendo as seguintes características:<br><br>
-● Utilização de no máximo 20 questionamentos realizados na pesquisa;<br>
-● Utilizar 3 meses para construção da solução (foi utilizado Agosto a Outubro;<br>
-● Caracterização dos sintomas clínicos da população;<br>
-● Comportamento da população na época da COVID-19;<br>
-● Características econômicas da Sociedade.<br><br>
+Este repositório apresenta o **projeto final da Fase 3 do curso de Data Analytics**, no módulo de **Big Data**, utilizando dados oficiais da **PNAD-COVID-19**, pesquisa conduzida pelo **IBGE**.
 
-<h1>Documentos Importantes:</h1><br><br>
-arquivo .pdf trata-se da entrega do documento final ao hospital, com resumos, indicadores e gráficos para visualização dos dados;<br><br>
-arquivo .pbix são os gráficos e dashboards utilizado para analise dos dados<br><br>
-pasta query_bigquery é a script utilizado para consultar as perguntas do questionario, e com isso importamos os resultados para fazer os dashs.<br><br>
-questionario 8, 9 e 10 se refere às questões da pesquisa que o IBGE fez aos respondentes.
+O projeto tem como foco a **organização, análise e visualização de grandes volumes de dados**, com apoio de **banco de dados em nuvem**, visando gerar **insights relevantes para a área da saúde e para a sociedade** durante o período crítico da pandemia.
+
+---
+
+## 🎯 Objetivo do Projeto
+
+O time de dados teve como principal objetivo **estruturar e analisar a base da PNAD-COVID-19**, aplicando conceitos de **Big Data e Analytics**, para responder questões relacionadas a:
+
+* 🩺 **Sintomas clínicos** apresentados pela população
+* 🧍 **Comportamento social** durante o período da COVID-19
+* 💰 **Características econômicas da sociedade** impactadas pela pandemia
+
+### Diretrizes do Projeto
+
+* Utilização de **até 20 questionamentos** do questionário oficial da PNAD-COVID
+* Análise de **3 meses específicos** para construção da solução
+  *(Agosto a Outubro)*
+* Uso de **Banco de Dados em Nuvem (Google BigQuery)** para tratamento e consulta dos dados
+
+---
+
+## 📊 Fonte dos Dados
+
+Os dados utilizados são **oficiais e públicos**, disponibilizados pelo **IBGE**, por meio da pesquisa **PNAD-COVID-19**:
+
+🔗 Link para download da base de dados:
+[https://www.ibge.gov.br/estatisticas/investigacoes-experimentais/estatisticas-experimentais/27946-divulgacao-semanal-pnadcovid1?t=downloads&utm_source=covid19&utm_medium=hotsite&utm_campaign=covid_19](https://www.ibge.gov.br/estatisticas/investigacoes-experimentais/estatisticas-experimentais/27946-divulgacao-semanal-pnadcovid1?t=downloads&utm_source=covid19&utm_medium=hotsite&utm_campaign=covid_19)
+
+---
+
+## 🧠 Metodologia
+
+* Ingestão e organização dos dados em **BigQuery**
+* Criação de **queries SQL** para seleção e filtragem das variáveis relevantes
+* Tratamento e modelagem dos dados para análise
+* Construção de **dashboards e visualizações interativas**
+* Elaboração de **relatório analítico** voltado à área da saúde
+
+---
+
+## 📁 Estrutura do Repositório
+
+* `query_bigquery/`
+  Scripts SQL utilizados para consultar e extrair as informações do questionário da PNAD-COVID.
+
+* `dashboard.pbix`
+  Arquivo do **Power BI** contendo os gráficos e dashboards utilizados na análise dos dados.
+
+* `documento_final.pdf`
+  Documento profissional entregue ao **hospital**, contendo:
+
+  * Resumos analíticos
+  * Indicadores-chave
+  * Gráficos e visualizações
+  * Insights relevantes para apoio à tomada de decisão
+
+* `questionarios/`
+  Questionários **8, 9 e 10** da PNAD-COVID, referentes às perguntas aplicadas aos respondentes.
+
+---
+
+## 👥 Integrantes do Time de Dados
+
+* Gabriel Silva Ferreira
+* Gustavo Duran Domingues
+* Jhonny Amorim Silva
+* Lucas Alexander dos Santos
+* Sandro Semmer
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* Google BigQuery
+* SQL
+* Power BI
+* Big Data Analytics
+* Visualização de Dados
+* Dados Públicos (IBGE)
